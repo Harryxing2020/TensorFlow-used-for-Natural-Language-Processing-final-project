@@ -1,0 +1,87 @@
+.iframeContainer {
+  padding: 20px;
+  border: 1px solid #e3e3e3;
+}
+
+/* Sticky Footer rules (https://getbootstrap.com/examples/sticky-footer/) */
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  /* Padding bottom by footer height */
+  padding-bottom: 80px;
+}
+
+#footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%; /* Set the fixed height of the footer here */
+  height: 10px;
+  padding-top: 20px;
+  padding-bottom: 40px;
+  text-align: center;
+  background-color: #f5f5f5;
+}
+
+#footer p {
+  margin: 0;
+  font-size: 16px;
+}
+
+
+#table-area th {
+  text-align: center;
+}
+
+
+.parallax {
+  /* The image used */
+  font-size: medium;
+  
+  background-image: url("images/trump-biden-debate.jpg");
+  /* Set a specific height */
+  min-height: 300px;
+  /* Create the parallax scrolling effect */
+  /* background-attachment: fixed; */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: #5ce0fa;
+}
+
+.parallax2 {
+  /* The image used */
+  font-size: medium;
+  
+  background-image: url("images/twitter-bird.jpg");
+  /* Set a specific height */
+  min-height: 300px;
+  /* Create the parallax scrolling effect */
+  /* background-attachment: fixed; */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: #5ce0fa;
+}
+
+#chartdiv1 {
+  /* background-image: url("twitter-bird.png"); */
+  width: 500;
+  height: 700px;
+}
+
+#chartdiv2 {
+  /* background-image: url("twitter-bird.png"); */
+  width: 500;
+  height: 700px;
+}
+
+
+
+#chartdiv-cup {
+  width: 100%;
+  height: 500px;
+}
+

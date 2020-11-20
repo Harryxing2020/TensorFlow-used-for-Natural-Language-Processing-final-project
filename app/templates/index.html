@@ -1,0 +1,118 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://bootswatch.com/4/cerulean/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+
+    <link rel="stylesheet" type="text/css" href="static/css/style.css">
+    <link rel="shortcut icon" href="">
+    <title>Team 4 Project2</title>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/">Home</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+
+        <a class="navbar-brand" href="/wordcloud">Tokenization word</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <a class="navbar-brand" href="/getattitude">Attitude</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        
+        <a class="navbar-brand" href="/presentation">Presentation</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <a class="navbar-brand" href="https://github.com/Harryxing2020/team4Project3StockML">GitHub</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </nav>
+
+    <div class="parallax2">
+        <br>
+        <h1 style="color: white;">
+            TensorFlow used for Natural Language Processing. Try our Analysis for ML.
+            <a style="color: white;" target="_blank" href="https://twitter.com/JoeBiden">@JoeBiden</a>
+            <a style="color: white;" target="_blank" href="https://twitter.com/realDonaldTrump">@realDonaldTrump</a>
+        </h1>
+
+    </div>
+    <br>
+
+    <div class="container">
+
+        <div class="row col-md-12">
+
+            <div class="col-md-4">
+                <br>
+                <form id="tweetinputform" class="well btn btn-default">
+                    <label for="countryInput">Tweet: </label>
+                    <input type="text" id="tweetinput" style="height:40px;" size="100"
+                        placeholder="Please copy Trump or Biden tweet from their twitters. We will tell you who tweets it.">
+                    <button id="submit" type="submit" style="height:40px;">Who tweets this? </button>
+                </form>
+            </div>
+        </div>
+        <div class="row col-md-12">
+            <div class="col-md-4">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Who tweets?</h3>
+                    </div>
+                    <div id="sample-metadata" class="panel-body"></div>
+                </div>
+            </div>
+
+            <div class="col-md-8">
+                <div id="chartdiv-cup"></div>
+            </div>
+
+        </div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.0.0/d3.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.7.1/d3-tip.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.js"></script>
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+        <script src="https://d3js.org/d3.v4.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.2.2/d3.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.7.1/d3-tip.min.js"></script>
+
+        <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+        <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+        <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
+        <script src="https://cdn.amcharts.com/lib/4/themes/material.js"></script>
+        <script src="https://cdn.amcharts.com/lib/4/plugins/forceDirected.js"></script>
+
+        <script src="https://cdn.amcharts.com/lib/4/themes/dataviz.js"></script>
+
+
+
+        <script src="static/js/inputtweet.js"></script>
+        <!-- <script src="static/js/showcontinentalbubble.js"></script> -->
+
+</body>
+
+</html>
