@@ -1,6 +1,6 @@
 function showWordCloud(showdata, anchor, name) {
 
-    console.log(showdata)
+    console.log("============>", showdata)
 
     am4core.ready(function () {
 
@@ -47,11 +47,16 @@ function showWordCloud(showdata, anchor, name) {
 
 function init(){
 
-    d3.json(`/getwordcloud/Biden`, function (result) {
-        showWordCloud(result['name'], 'chartdiv1', "Joe Biden")
+    d3.json(`/getwordcloud/Biden`, function (result1) {
 
-        d3.json(`/getwordcloud/Trump`, function (result) {
-            showWordCloud(result['name'], 'chartdiv2', "Donald Trump")
+        // console.log(result1)
+        showWordCloud(result1, 'chartdiv1', "Joe Biden")
+
+        d3.json(`/getwordcloud/Trump`, function (result2) {
+            showWordCloud(result2, 'chartdiv2', "Donald Trump")
+
+            // console.log(result2)
+            
         })
     })
 };

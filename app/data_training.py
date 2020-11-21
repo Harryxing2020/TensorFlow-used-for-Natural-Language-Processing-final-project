@@ -1,13 +1,22 @@
 # Load the model
 import pandas as pd
+import tweepy
 import numpy as np 
 import psycopg2
 # from tensorflow import keras
 from tensorflow.python.keras.preprocessing.text import Tokenizer
 from tensorflow.python.keras.preprocessing.sequence import pad_sequences
 
-# from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
-# analyzer = SentimentIntensityAnalyzer()
+# Twitter API Keys
+consumer_key = 'q'
+consumer_secret= 'V'
+access_token= '1'
+access_token_secret=''
+
+# Setup Tweepy API Authentication
+auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+auth.set_access_token(access_token, access_token_secret)
+api = tweepy.API(auth, parser=tweepy.parsers.JSONParser())
 
 import tensorflow as tf
 
@@ -30,33 +39,38 @@ def load_db():
         database="example",
         user="postgres",
         password="",
-        host="",
+        host="dacom",
         port='5432'
     )
     cur = conn.cursor()
-    cur.execute("""SELECT * FROM tweet""")
+    cur.execute("""SELECT * FROM tweet_wordcloud""")
     rows = cur.fetchall()
-    tweetPd = pd.DataFrame(rows)
-    return tweetPd
+    tweetcloudPd = pd.DataFrame(rows)
+    tweetcloudPd.columns = ["tag", "count", "name"]
+    return tweetcloudPd
 
-def get_attitude(model_sentiment,tokenizer, tweetPd, name):
+def  get_wordcloud(tweetcloudPd, name):
+    wordCloud = []
+    for row in tweetcloudPd[tweetcloudPd['name']== name].iterrows():
+        wordCloud.append({
+            'tag': row[1]['tag'],
+            'count': row[1]['count']
+        })
+
+    return wordCloud
+
+
+def get_attitude(model_sentiment,tokenizer, tweets):
 
     print("========================================")
-    searchTweetPd =  tweetPd[tweetPd[1]== name]
-    # The computer run slow when it count entire dataset. So I have to load 10 sample data
-    searchTweetPd10record = searchTweetPd.sample(n=10,replace=False) 
-    
-    tweetText = []
-    for i in range(len(searchTweetPd10record)):
-        tweetText.append(searchTweetPd10record.iloc[i,2])
 
-    tokens = tokenizer.texts_to_sequences(tweetText)
+    tokens = tokenizer.texts_to_sequences(tweets)
     tokens_pad = pad_sequences(tokens, maxlen=544,
                                padding='pre', truncating='pre')
 
     result = model_sentiment.predict(tokens_pad)
     print("========================================", np.mean(result))
-    return float(np.mean(result))
+    return (float(np.mean(result)), result)
 
 
 def predict(model, tokenizer,text):
@@ -69,3 +83,35 @@ def predict(model, tokenizer,text):
     # tokens_pad.shape
     result = model.predict(tokens_pad)
     return result
+
+def retrieve_current_tweet(target_user):
+    
+    
+    cleanContent = []
+    counter = 0 
+    while len(cleanContent)<20:
+        public_tweets = api.user_timeline(id = target_user, page = 1 + counter )
+        for tweet in public_tweets:
+            if tweet["text"].find("RT")>=0:
+                print("out-------------------")
+                continue
+
+            content = tweet["text"].split('…')[0].split('https://')[0]
+            at = content.find("@")
+            while at>=0:
+                space = content[at:].find(" ")
+                if space < 0:
+                    space = content[at:].find(",")
+                if space >=0:
+                    content = content[:at] + content[at + space:]
+                else:
+                    content = content[:at]
+                at = content.find("@")
+
+            if len(content)> 26:
+                cleanContent.append(content)
+                if len(cleanContent) >=20:
+                    break
+
+
+    return cleanContent

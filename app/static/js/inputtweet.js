@@ -1,3 +1,32 @@
+function showScrolltweet() {
+
+    d3.json(`/getcurrentTweet`, function (tweets) {
+
+        var sample_metadata = d3.select("#sample-metadata");
+        sample_metadata.html("");
+        var marquee = sample_metadata.append("marquee");
+
+
+        for(i = 0; i < tweets.length; i++){
+            var p = marquee.append("p")
+            p.text(tweets[i])
+            // p = marquee.append("p")
+            // p.text('_________________________')            
+        }
+
+
+        marquee.attr("direction", 'up')
+        marquee.attr("scrollamount", '6')
+        marquee.attr("height", '200')
+        
+        // marquee.attr("behavior", 'slide')
+        // vspace
+
+    });
+}
+
+
+
 function showCupChart(result) {
 
     showdata = [{
@@ -57,10 +86,10 @@ function showInfo(result) {
 
     var sample_metadata = d3.select("#sample-metadata");
     if (result["possibility"] < 0.5) {
-        img_url = 'https://upload.wikimedia.org/wikipedia/commons/5/56/Donald_Trump_official_portrait.jpg'
+        img_url = 'https://media.giphy.com/media/26tknCqiJrBQG6bxC/giphy.gif'
         showpossible = 1 - result["possibility"]
     } else {
-        img_url = 'http://upload.wikimedia.org/wikipedia/commons/f/f4/Joe_Biden_official_portrait_2013.jpg'
+        img_url = 'https://38.media.tumblr.com/77b711f1ca1d5a9a0c6c805bd36f979f/tumblr_n07iwyh7Zk1qc8jh0o4_250.gif'
         showpossible = result["possibility"]
     }
 
@@ -71,8 +100,8 @@ function showInfo(result) {
     // row.text(`Possibility is: ${(showpossible* 100).toFixed(2)} %`);
 
     img = sample_metadata.append("img")
-    img.attr("width", 180)
-    img.attr("height", 230)
+    img.attr("width", 280)
+    img.attr("height", 300)
     img.attr("src", img_url);
 
     row = sample_metadata.append("h4");
@@ -102,6 +131,7 @@ function handleSubmit() {
 function init() {
     d3.select("#submit").on("click", handleSubmit);
     d3.select("#tweetinputform").on("submit", handleSubmit);
+    showScrolltweet()
 }
 ///////////////////////////////////////////////////////////////////////
 // program entrance

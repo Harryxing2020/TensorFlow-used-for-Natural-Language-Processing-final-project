@@ -1,17 +1,18 @@
 import pandas as pd
 from flask import Flask, jsonify, render_template
 # from sqlalchemy import create_engine
-from data_training import initial_model, predict, load_db, get_attitude
-from getwordcloud import get_Biden, get_trump
+from data_training import initial_model, predict, load_db, get_attitude, retrieve_current_tweet, get_wordcloud
+# from getwordcloud import get_Biden, get_trump
 
 application = app = Flask(__name__)
 
 #################################################
 #################################################
-global tokenizer, tweetPd, model_biden_trump, model_sentiment
+global tokenizer, tweetcloudPd, model_biden_trump, model_sentiment, currentTweet
 model_biden_trump,model_sentiment, tokenizer = initial_model()
-tweetPd = load_db()
+tweetcloudPd = load_db()
 attitudeJson = None
+currentTweet = None
 
 
 #################################################
@@ -50,24 +51,65 @@ def metapredict(tweet):
 
 @app.route("/getwordcloud/<name>")
 def getwordcloud(name):
-    if name == 'Biden':
-        returnJson = { "name": get_Biden()}
-    else:
-        returnJson =  { "name": get_trump()}
-
-    return jsonify(returnJson)
+    return jsonify(get_wordcloud(tweetcloudPd, name))
 
 @app.route("/getattitudeData")
 def getattitude():
     global attitudeJson
     
     if attitudeJson == None:
+        trumpTweet = retrieve_current_tweet("@realDonaldTrump")
+        bidenTweet = retrieve_current_tweet("@JoeBiden")
+        TrumpMean, valueListTrump = get_attitude(model_sentiment, tokenizer, trumpTweet)
+        BidenMean, valueListBiden = get_attitude(model_sentiment, tokenizer, bidenTweet)
+
+
+        print("===========?", len(trumpTweet) )
+        print("===========?", len(bidenTweet) )
+        print("===========?", len(valueListTrump) )
+        print("===========?", len(valueListBiden) )
+        trumpList = []
+        i = 0
+        for item in valueListTrump:
+            trumpList.append({
+                "tweet": trumpTweet[i],
+                "Negitive": float(item[0]-1)*100,
+                "Positive": float(item[0])*100
+            })
+            i+=1
+
+        bidenList = []
+        i = 0
+        for item in valueListBiden:
+            bidenList.append({
+                "tweet": bidenTweet[i],
+                "Negitive": float(item[0]-1)*100,
+                "Positive": float(item[0])*100
+            })
+            i+=1
         attitudeJson = {
-            "Biden": get_attitude(model_sentiment,tokenizer,  tweetPd, "<JoeBiden>"), 
-            "Trump": get_attitude(model_sentiment, tokenizer, tweetPd, "<realDonaldTrump>")
+            # "TrumpTweet": trumpTweet, 
+            # "BidenTweet": bidenTweet,
+
+            "Trumplist": trumpList, 
+            "Bidenlist": bidenList,
+
+            "Trump": TrumpMean, 
+            "Biden": BidenMean, 
         }
 
     return jsonify(attitudeJson)
+
+@app.route("/getcurrentTweet")
+def getcurrentTweet():
+    global currentTweet
+    
+    if currentTweet == None:
+        currentTweet = retrieve_current_tweet("@realDonaldTrump")
+        currentTweet += retrieve_current_tweet("@JoeBiden")
+
+    return jsonify(currentTweet)
+
 
 @app.route("/getattitude")
 def getattitudehtml():

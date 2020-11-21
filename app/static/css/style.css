@@ -117,3 +117,11 @@ body {
   height: 500px;
 }
 
+marquee span { 
+  margin-right: 100%; 
+  } 
+  marquee p { 
+  white-space:nowrap;
+  margin-right: 1000px; 
+  } 
+
