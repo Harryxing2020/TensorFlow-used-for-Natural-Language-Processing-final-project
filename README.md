@@ -1,1 +1,1 @@
-The project URL: nationallanguage.us-east-1.elasticbeanstalk.com
+The project URL: http://twitteridentifierproject-env.eba-8mrmr3nz.us-west-1.elasticbeanstalk.com/
